@@ -22,8 +22,15 @@ pacman::p_load(tidyverse,
 
 ```{r}
 
-check_statement <- extract_tables(file = here("data", "check_statement.pdf"), 
-                                  method = "decide")
+file_path <- here("data", "check_statement.pdf")
+
+if (file.exists(file_path)) {
+    
+check_statement <- extract_tables(file = file_path)
+
+} else {stop("File path is wrong.")}
+
+if (length(check_statement) == 0) {stop("Something's wrong with extracting a table from the PDF file.")}
 
 ```
 
@@ -33,6 +40,10 @@ check_statement <- extract_tables(file = here("data", "check_statement.pdf"),
 # Turn the list of matrices into a dataframe 
 df <- map_dfr(check_statement, data.frame)
 
+```
+
+
+```{r}
 # Remove the first three rows 
 df <- df %>% filter(!str_detect(X1, "TRANSACTION|transaction|DESCRIPTION|Beginning"))
 
@@ -44,13 +55,27 @@ df <- df %>%
     ) 
     
 # Rename columns 
-names(df) <- c("Description", "Amount", "Balance", "Date")
+
+if (ncol(df) == 4) {
+
+    names(df) <- c("Description", "Amount", "Balance", "Date")
+
+} else {
+
+    # In some cases, unnecessary X2 column is created during the table extracting process.  
+    
+    df <- df[,-2]
+    
+    names(df) <- c("Description", "Amount", "Balance", "Date")
+    
+}
 
 # Add columns 
 df$Card <- if_else(str_detect(df$Description, "Card") == TRUE, 1, 0)
 df$Venmo <- if_else(str_detect(df$Description, "Venmo") == TRUE, 1, 0)
 df$Withdraw <- if_else(str_detect(df$Amount, "-") == TRUE, 1, 0) 
 df$Deposit <- if_else(str_detect(df$Amount, "-") != TRUE, 1, 0) 
+
 ```
 
 
@@ -68,16 +93,9 @@ df$Date <- map(df$Date, ~str_extract(., "[:alpha:]")) %>%
     pull(value)
 ```
 
-
 ```{r}
 # Clean Description column 
-
-if (df$Date != "Not date") {
-    
-    # Remove date 
-    df$Description <- str_replace_all(df$Description, df$Date, "")    
-    
-} 
+df$Description <- if_else(df$Date != "Not date", str_replace_all(df$Description, df$Date, ""), df$Description)
 
 # Filter not-date rows  
 df <- df %>% filter(Date != "Not date")
@@ -93,14 +111,29 @@ df <- df %>%
 current_year <- 2020 
 
 df$Date <- as.Date(glue("2020/{df$Date}"))
+
+df 
 ```
 
 # Extract and export R code 
 
 ```{r eval=FALSE}
-knitr::purl(input = here("R", "parse_card_statement.Rmd"), 
-            output = here("R", "parse_chase_statement.r"))
+knitr::purl(input = here("R", "parse_check_statement.Rmd"), 
+            output = here("R", "parse_check_statement.r"))
 ```
+
+# Test the function 
+
+```{r}
+source(here("R", "parse_check_statement.r"))
+
+parse_check_statement(
+    file_path = here("data", "check_statement.pdf"),
+    current_year = 2020                   
+        )
+
+```
+
 
 
 
