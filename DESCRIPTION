@@ -5,7 +5,7 @@ Type: Package
 Title: Tidying Chase Bank Statements 
 Authors@R: person("Jae Yeon", "Kim", email = "jaeyeonkim@berkeley.edu", role = c("ctb", "cre"))
 Maintainer: Jae Yeon Kim <jaeyeonkim@berkeley.edu>
-BugReports: https://github.com/jaeyk/tidy_chase_bank_statements/issues
+BugReports: https://github.com/jaeyk/TidyChaseBankStatements/issues
 Description: This R package provides functions to turn a Chase Bank statement (a PDF file) into a tidyverse-friendly dataframe. 
 Depends: R (>= 3.6)
 License: MIT + file LICENSE
