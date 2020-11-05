@@ -20,3 +20,6 @@ Imports:
     glue (>= 1.4.2),
     utils (>= 4.0.3)
 RoxygenNote: 7.1.1
+Suggests: 
+    spelling
+Language: en-US
