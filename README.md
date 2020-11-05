@@ -19,27 +19,11 @@ devtools::install_github("jaeyk/TidyChaseBankStatements", dependencies = TRUE)
 
 ## Usage
 
-Now, you have a Tweet JSON file or a list of them. Collecting the Tweet JSON file could have has been tedious, especially if you have never done this before. By contrast, turning these files into a tidyverse-ready dataframe is incredibly easy and lightning fast with the help of `tidytweetjson`.
+### 1. `parse_check_statement()`: Turn one Chase Bank statement (one PDF file) into a dataframe 
 
-The parsed JSON data has a tidy structure. It has nine columns: (user) `id`, `country_code` (country code), (user) `location`, `created_at` (time stamp), `full_text` (tweets), `retweet_count`, `favorite_count`, `user.followers_count`, and `user.friends_count`. Its rows are tweets.
+### 2. `parse_check_statement_all()`: Turn all Chase Bank statements, saved in a directory, into a dataframe 
 
-### 1. `jsonl_to_df()`: Turn a Tweet JSON file into a dataframe
-
-```r
-
-# Load library
-library(tidytweetjson)
-
-# You need to choose a Tweet JSON file
-filepath <- file.choose()
-
-# Assign the parsed result to the `df` object
-df <- jsonl_to_df(filepath)
-```
-
-### 2. `parse_check_statement_all()`: Turn all Bank statements, saved in a directory, into a dataframe 
-
-TBD
+**TBD**
 
 ## How to cite
 
