@@ -39,7 +39,7 @@ df <- TidyChaseBankStatements::parse_check_statement(
 The parsed output data has a tidy structure. It has eight columns: `(transaction) Date`, `(transaction) Description`, `(transaction) Amount`, `Balance`, `Card` (whether the transaction is related to credit card payment), `Venmo` (whether the transaction is related to Venmo transfers), `Withdraw` (whether the transaction is about withdraw), `Deposit` (whether the transaction is about deposit)
 
 ```r
-# Example output 
+# Examle output (note that this is hypothetical data) 
 df[1:5, ]
 
         Date Description Amount Balance Card Venmo Withdraw Deposit
