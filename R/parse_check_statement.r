@@ -1,39 +1,23 @@
-#' Parse a Chase bank statement (saved in an accessible PDF format) into a tidyverse-friendly dataframe 
+#' Parse a Chase bank statement (saved in a PDF format) into a tidyverse-friendly dataframe 
 #'
-#' @param file_path A file path which indicates an accessible PDF file that contains Chase bank statement. 
+#' @param file_path A file path which indicates a PDF file that contains Chase bank statement. 
+#' @param report_year The year in which the bank statement was reported. The data type of this argument should be numeric (e.g., 2020). 
 #' 
-#' @return A dataframe with four columns ("text", "source", "author", "date")
-#' @importFrom tidyr separate
+#' @return A dataframe with eight columns ("Date, "Description", "Amount", "Balance", "Card", "Venmo", "Withdraw", "Deposit")
+#' @import dplyr
+#' @importFrom tibble enframe 
 #' @importFrom magrittr "%>%"
-#' @importFrom stringr str_replace_all
-#' @importFrom stringr str_squish
-#' @importFrom stringr str_trim
-#' @importFrom xml2 read_html
-#' @importFrom purrr map
-#' @importFrom purrr reduce
-#' @importFrom rvest html_nodes
-#' @importFrom rvest html_text
-#' @importFrom textclean replace_html
+#' @importFrom tabulizer extract_tables
+#' @import stringr 
+#' @import purrr
+#' @importFrom glue glue 
+#' @import utils 
 #' @export
 #' 
 
 ## ---------------------------------------------------------------------------------------------------------
-if (!require(pacman)) install.packages("pacman")
 
-pacman::p_load(tidyverse, 
-               tabulizer,
-               purrr,
-               glue, 
-               here)
-
-
-
-## ---------------------------------------------------------------------------------------------------------
-
-file_path <- here("data", "check_statement.pdf")
-current_year <- 2020 
-
-parse_check_statement <- function(file_path, current_year){
+parse_check_statement <- function(file_path, report_year){
 
 # Import PDF file and extract table     
 if (file.exists(file_path)) {
@@ -111,7 +95,7 @@ df <- df %>%
 
 # Reformat Date variable 
 
-df$Date <- as.Date(glue("{current_year}/{df$Date}"))
+df$Date <- as.Date(glue("{report_year}/{df$Date}"))
 
 return(df)
 

@@ -1,0 +1,1 @@
+utils::globalVariables(c("X1", "value", "Date", "Amount", "Balance"))
