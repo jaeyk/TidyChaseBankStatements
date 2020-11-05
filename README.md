@@ -42,12 +42,12 @@ The parsed output data has a tidy structure. It has eight columns: `(transaction
 # Example output 
 df[1:5, ]
 
-    Date        Description Amount Balance Card Venmo Withdraw Deposit 
-1	2020-06-01	Netflix	     -10	10000	1   	0	  1	      0
-2	2020-06-01	Amazon	     -10	9990	1   	0	  1  	  0
-3	2020-06-01	Grocery	      30	9980	1   	0	  1 	  0
-4	2020-06-01	Amazon	     -10	9970	1	    0	  1 	  0
-5	2020-06-01	Amazon	      20	9960	1   	0	  1 	  0
+Date        Description Amount Balance Card   Venmo Withdraw Deposit 
+2020-06-01	Netflix	     -10	10000  	1   	0	   1	    0
+2020-06-01	Amazon	     -10	9990	1   	0	   1  	    0
+2020-06-01	Grocery	      30	9980	1   	0	   1 	    0
+2020-06-01	Amazon	     -10	9970	1	    0	   1 	    0
+2020-06-01	Amazon	      20	9960	1   	0	   1 	    0
 ```
 
 ### 2. `parse_check_statement_all()`: Turn all Chase Bank statements, saved in a directory, into a dataframe 
