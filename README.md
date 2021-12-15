@@ -50,10 +50,6 @@ df[1:5, ]
 5 2020-02-25     Netflix    -10   10040    1     0        0       1
 ```
 
-### 2. `parse_check_statement_all()`: Turn all Chase Bank statements, saved in a directory, into a dataframe 
-
-**TBD**
-
 ## How to cite
 
 If you would like to cite, please do something like the following:
